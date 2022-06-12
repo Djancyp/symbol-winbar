@@ -33,7 +33,7 @@ local function diagnostics(severity)
 end
 
 function M.diagnostic_errors()
-    return diagnostics(diagnostic.severity.ERROR), '  '
+        return diagnostics(diagnostic.severity.ERROR), '  '
 end
 
 function M.diagnostic_warnings()

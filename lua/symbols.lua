@@ -68,8 +68,5 @@ function M.get_root_for_node(node)
     return result
 end
 
-function M.P(val)
-    return print(vim.inspect(val))
-end
 
 return M

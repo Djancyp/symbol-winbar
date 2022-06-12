@@ -2,6 +2,8 @@ local W = {}
 local status_web_devicons_ok, web_devicons = pcall(require, 'nvim-web-devicons')
 local api = vim.api
 local lsp = require('providers/lsp')
+local gps = require('providers/gps')
+
 local colors = {
     bg = '#ebdbb2',
     fg = '#abb2bf',
@@ -50,6 +52,18 @@ local function setLsp()
 
 end
 
+local function get_gps()
+    local current_buffer = api.nvim_get_current_buf()
+    local c = vim.lsp.buf_get_clients(current_buffer)
+    for _, client in pairs(c) do
+        if client.server_capabilities.documentSymbolProvider then
+            -- print(client.name)
+            gps.attach(client, current_buffer)
+        end
+
+    end
+end
+
 function W.init(opts)
     local file_path           = vim.fn.expand('%:~:.:h')
     local filename            = vim.fn.expand('%:t')
@@ -57,6 +71,7 @@ function W.init(opts)
     local hl_winbar_file_icon = 'WinBarFileIcon'
     local changed_icon_color  = "FileIconColor"
     api.nvim_set_hl(0, changed_icon_color, { fg = '#66EB73' })
+    get_gps()
 
     local value = ''
     if vim.tbl_contains(opts.exclude_filetypes, file_type) then
@@ -83,11 +98,12 @@ function W.init(opts)
     else
         value = ' ' .. file_icon .. filename
     end
+    if opts.gps then
+        value = value .. '%=' .. gps.get_location()
+    end
     if opts.lsp then
         value = value .. ' ' .. setLsp()
     end
-
-    -- get current buffer and check if there is any changes
     local buf = vim.api.nvim_get_current_buf()
     local change_icon = '%#' .. changed_icon_color .. '#' .. opts.changes_icon .. ' '
     if vim.api.nvim_buf_get_option(buf, 'modified') then
