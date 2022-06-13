@@ -86,6 +86,9 @@ function W.init(opts)
     if status_web_devicons_ok then
         file_icon, file_icon_color = web_devicons.get_icon_color(filename, file_type, { default = default })
     end
+    if not file_icon or file_icon == '' then
+        file_icon = ''
+    end
     vim.api.nvim_set_hl(0, hl_winbar_file_icon, { fg = file_icon_color })
     file_icon = '%#' .. hl_winbar_file_icon .. '#' .. file_icon .. ' %*'
     --split file path to lines

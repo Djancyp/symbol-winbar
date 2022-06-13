@@ -39,6 +39,8 @@ local opts = {
 local cmd = vim.api.nvim_create_autocmd
 function M.setup(config)
     opts = vim.tbl_deep_extend("force", opts, config or {})
+
+
     cmd({ 'DirChanged', 'CursorMoved', 'CursorMovedI', 'BufWinEnter', 'BufFilePost', 'InsertEnter', 'BufWritePost' }, {
         callback = function()
             local current_buffer = api.nvim_get_current_buf()
