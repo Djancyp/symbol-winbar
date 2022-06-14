@@ -71,7 +71,9 @@ function W.init(opts)
     local hl_winbar_file_icon = 'WinBarFileIcon'
     local changed_icon_color  = "FileIconColor"
     api.nvim_set_hl(0, changed_icon_color, { fg = '#66EB73' })
-    get_gps()
+    if opts.gps then
+        get_gps()
+    end
 
     local value = ''
     if vim.tbl_contains(opts.exclude_filetypes, file_type) then
