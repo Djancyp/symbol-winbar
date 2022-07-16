@@ -104,13 +104,14 @@ function W.init(opts)
         value = ' ' .. file_icon .. filename
     end
     if opts.gps then
-        value = value .. '%=' .. gps.get_location()
+        value = value .. '  ' .. gps.get_location()
+
     end
     if opts.lsp then
         value = value .. ' ' .. setLsp()
     end
     local buf = vim.api.nvim_get_current_buf()
-    local change_icon = '%#' .. changed_icon_color .. '#' .. opts.changes_icon .. ' '
+    local change_icon = '%=' .. '%#' .. changed_icon_color .. '#' .. opts.changes_icon .. ' '
     if vim.api.nvim_buf_get_option(buf, 'modified') then
         value = value .. '  ' .. change_icon
     end
