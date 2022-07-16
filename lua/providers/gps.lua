@@ -27,6 +27,9 @@ local function parse(symbols)
             local curr_parsed_symbol = {}
 
             local scope = val.range
+            if (scope == nil) then
+                return
+            end
             scope["start"].line = scope["start"].line + 1
             scope["end"].line = scope["end"].line + 1
 
